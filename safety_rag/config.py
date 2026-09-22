@@ -46,8 +46,14 @@ class Settings:
     bm25_k1: float = 1.5
     bm25_b: float = 0.75
     top_k: int = 6
-    candidate_k: int = 40
-    mmr_lambda: float = 0.7
+    candidate_k: int = 25
+    # Only near-identical chunks are suppressed. Broader diversity forcing hurts here:
+    # the top cluster for a specific question is usually the correct evidence.
+    duplicate_threshold: float = 0.92
+    # Cosine below this is unrelated text, not a weak match — keep it out of the pool.
+    dense_floor: float = 0.25
+    # Drop tail results scoring far below the best hit rather than padding to top_k.
+    score_ratio_cutoff: float = 0.35
     dense_model: str = field(
         default_factory=lambda: os.environ.get(
             "SAFETY_RAG_DENSE_MODEL", "sentence-transformers/all-MiniLM-L6-v2"

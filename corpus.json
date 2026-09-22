@@ -1,0 +1,44 @@
+{
+  "sources": [
+    {
+      "label": "safety-vision-code",
+      "root": "~/Desktop/Projects/safety-vision",
+      "kind": "code",
+      "include": ["src/**/*.py", "config/**/*.py", "scripts/**/*.py", "tests/**/*.py"],
+      "exclude": ["**/__pycache__/**"]
+    },
+    {
+      "label": "safety-vision-docs",
+      "root": "~/Desktop/Projects/safety-vision",
+      "kind": "prose",
+      "include": ["README.md", "docs/**/*.md", "*.md"]
+    },
+    {
+      "label": "graduation-report",
+      "root": "~/Desktop/Projects/Graduation Report",
+      "kind": "prose",
+      "include": ["Chapters/*.tex", "comp4200.tex", "bibliography.tex"]
+    },
+    {
+      "label": "requirements-and-sops",
+      "root": "~/Downloads/Documents",
+      "kind": "prose",
+      "include": [
+        "AI_Safety_System_Requirements_Specification.docx",
+        "Functional_and_NonFunctional_Requirements.docx",
+        "Smart_Safety_Monitoring_System_Pilot_SOP*.pdf",
+        "user_requirements*.pdf",
+        "User Requirement*.pdf"
+      ]
+    },
+    {
+      "label": "system-writeups",
+      "root": "~/Downloads",
+      "kind": "prose",
+      "include": [
+        "Safety-Vision-System.pdf",
+        "Academic/Other/AI-Powered-Camera-Based-Safety-System.pdf"
+      ]
+    }
+  ]
+}

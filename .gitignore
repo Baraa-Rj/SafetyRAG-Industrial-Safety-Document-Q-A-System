@@ -1,0 +1,14 @@
+# Virtualenv
+.venv/
+
+# Built index artifacts — rebuild with `safety-rag index`
+.index/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Secrets
+.env

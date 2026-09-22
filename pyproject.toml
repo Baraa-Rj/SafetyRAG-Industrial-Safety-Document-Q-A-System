@@ -1,0 +1,25 @@
+[project]
+name = "safety-rag"
+version = "0.1.0"
+description = "Retrieval-augmented question answering over the safety-vision corpus (code, reports, SOPs, requirements)."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+# Dense retrieval. Without it the system runs lexical-only and still answers.
+dense = ["sentence-transformers>=2.2"]
+# .docx ingestion. PDF ingestion uses the poppler `pdftotext` binary, not a Python dep.
+docx = ["python-docx>=1.0"]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+safety-rag = "safety_rag.cli:main"
+
+[tool.setuptools]
+packages = ["safety_rag"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

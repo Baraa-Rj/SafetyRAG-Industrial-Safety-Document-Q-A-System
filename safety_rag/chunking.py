@@ -148,7 +148,9 @@ def _make_chunk(doc: RawDoc, heading: str, text: str, ordinal: int, meta: dict |
 
 def chunk_document(doc: RawDoc, settings: Settings = SETTINGS) -> list[Chunk]:
     chunks = _chunk_code(doc, settings) if doc.kind == "code" else _chunk_prose(doc, settings)
-    kept = [c for c in chunks if len(c.text) >= settings.min_chunk_chars]
+    # A short chunk under a heading is a real section, not a fragment — dropping it on
+    # length alone loses whole sections from the index.
+    kept = [c for c in chunks if c.heading or len(c.text) >= settings.min_chunk_chars]
     return kept or chunks[:1]
 
 

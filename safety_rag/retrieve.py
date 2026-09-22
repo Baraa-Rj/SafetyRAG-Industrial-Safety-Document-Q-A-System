@@ -104,14 +104,15 @@ class Retriever:
             if not mask.any():
                 return []
 
-        bm25_ranking = _top_indices(np.where(mask, bm25_scores, -np.inf), self.settings.candidate_k)
-        bm25_ranking = bm25_ranking[bm25_scores[bm25_ranking] > 0]
-        rankings = [bm25_ranking]
+        # Thresholds must be applied to the masked scores: a label-excluded chunk sits at
+        # -inf there, but still carries its real score in the unmasked array.
+        masked_bm25 = np.where(mask, bm25_scores, -np.inf)
+        bm25_ranking = _top_indices(masked_bm25, self.settings.candidate_k)
+        rankings = [bm25_ranking[masked_bm25[bm25_ranking] > 0]]
         if dense_scores is not None:
-            dense_ranking = _top_indices(
-                np.where(mask, dense_scores, -np.inf), self.settings.candidate_k
-            )
-            rankings.append(dense_ranking[dense_scores[dense_ranking] >= self.settings.dense_floor])
+            masked_dense = np.where(mask, dense_scores, -np.inf)
+            dense_ranking = _top_indices(masked_dense, self.settings.candidate_k)
+            rankings.append(dense_ranking[masked_dense[dense_ranking] >= self.settings.dense_floor])
 
         fused = _reciprocal_rank_fusion(rankings, len(chunks))
         candidate_ids = sorted({int(i) for ranking in rankings for i in ranking}, key=lambda i: -fused[i])

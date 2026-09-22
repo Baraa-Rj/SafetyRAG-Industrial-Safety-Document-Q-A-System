@@ -77,6 +77,7 @@ def _read_tex(path: Path) -> str:
     text = re.sub(r"\\item\s*", "- ", text)
     text = re.sub(r"\\[a-zA-Z]+\*?(\[[^\]]*\])?(\{[^}]*\})?", " ", text)
     text = re.sub(r"\\([_&%#${}])", r"\1", text)
+    text = re.sub(r"\\[,;:!]", " ", text)
     text = text.replace("``", '"').replace("''", '"').replace("~", " ")
     return re.sub(r"\n{3,}", "\n\n", text)
 

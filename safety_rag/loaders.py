@@ -76,7 +76,8 @@ def _read_tex(path: Path) -> str:
     text = re.sub(r"\\begin\{itemize\}|\\end\{itemize\}|\\begin\{enumerate\}|\\end\{enumerate\}", "", text)
     text = re.sub(r"\\item\s*", "- ", text)
     text = re.sub(r"\\[a-zA-Z]+\*?(\[[^\]]*\])?(\{[^}]*\})?", " ", text)
-    text = text.replace("~", " ").replace("\\&", "&")
+    text = re.sub(r"\\([_&%#${}])", r"\1", text)
+    text = text.replace("``", '"').replace("''", '"').replace("~", " ")
     return re.sub(r"\n{3,}", "\n\n", text)
 
 

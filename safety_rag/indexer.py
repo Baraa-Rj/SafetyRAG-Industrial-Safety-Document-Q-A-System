@@ -46,12 +46,15 @@ def build_index(
             dense_model = backend.model_name
             log(f"embeddings: {embeddings.shape}")
 
-    fingerprints = {str(doc.path): doc.fingerprint for doc in documents}
+    # Fingerprint every discovered file, not just the ones that yielded text, so an
+    # unparseable or empty file does not read as permanently stale.
+    fingerprints = current_fingerprints(sources)
     meta = build_meta(
         chunks,
         fingerprints,
         dense_model,
         [(str(f.path), f.reason) for f in failures],
+        n_documents=len(documents),
     )
     return Index(chunks=chunks, bm25=bm25, embeddings=embeddings, meta=meta)
 

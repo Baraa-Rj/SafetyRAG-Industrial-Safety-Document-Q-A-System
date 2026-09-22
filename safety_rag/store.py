@@ -60,6 +60,7 @@ def build_meta(
     fingerprints: dict[str, str],
     dense_model: str | None,
     failures: list[tuple[str, str]],
+    n_documents: int,
 ) -> dict:
     labels: dict[str, int] = {}
     for chunk in chunks:
@@ -67,7 +68,7 @@ def build_meta(
     return {
         "built_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
         "n_chunks": len(chunks),
-        "n_documents": len(fingerprints),
+        "n_documents": n_documents,
         "chunks_per_source": labels,
         "dense_model": dense_model,
         "fingerprints": fingerprints,
